@@ -9,7 +9,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
        backgroundColor: Color(0xFFF9F9F9),
       appBar: _appBar(),
-      body: _labels(),
+      body: Column(
+        children: <Widget>[
+          _labels(),
+          _historias(),
+        ],
+      ),
     );
   }
 
@@ -65,6 +70,60 @@ Widget _labels(){
   );
 }
 
+
+Widget _historias(){
+  return Container(
+    height: 105,
+    width: double.infinity,
+    margin: EdgeInsets.only(top: 10, left: 5),
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      children: <Widget>[
+        _crearHistoria(Colors.pink),
+        _crearHistoria(Colors.blue),
+        _crearHistoria(Colors.green),
+        _crearHistoria(Colors.brown),
+        _crearHistoria(Colors.yellow),
+
+
+
+        
+
+      ],
+    ),
+  );
+}
+
+ Widget _crearHistoria(Color color){
+   return Column(
+     children: <Widget>[
+       Container(
+         margin: EdgeInsets.symmetric(horizontal: 8, ),
+         decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), border: Border.all(
+           width: 3,
+           color: Color(0xFF8E44AD)
+         )),
+         child: Container(
+           padding: EdgeInsets.all(2),
+           child: ClipRRect(
+             borderRadius: BorderRadius.circular(50),
+             child: Image(
+               image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGa_HSPmOuXZjwVPe3iRFse3_ev61GED0hTg&usqp=CAU') ,
+               height: 65,
+               width: 65,
+               fit: BoxFit.cover,
+               
+             ),
+           ),
+         ),
+       ),
+       SizedBox(height: 6),
+       Text('Rosalia', style: TextStyle(fontSize: 13),),
+       
+     ],
+   );
+}
 
 
 }
