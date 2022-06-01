@@ -26,7 +26,10 @@ class HomePage extends StatelessWidget {
     elevation: 0,
     centerTitle: true,
     backgroundColor: Color(0xFFF9F9F9),
-    title: Text('Instagram Clone - JoseCima', style: TextStyle(color: Colors.black87),
+    title: Container(
+      margin: EdgeInsets.only(top: 10),
+      child: SizedBox(child: Image.asset('assets/img/logo_instagram.jpg'),
+      height: 40,),
     ),
     leading: IconButton(
       onPressed: (){},
@@ -41,7 +44,25 @@ class HomePage extends StatelessWidget {
 }
 
 Widget _labels(){
-  return Text('Home');
+  return Container(
+    margin: EdgeInsets.only(top: 5, left: 15, right: 15),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('Stories',
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+        ),
+        
+        Row(
+          children: [
+            Icon(Icons.arrow_right),
+            Text('Watch All',
+             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          ],
+        ),
+      ],
+    ),
+  );
 }
 
 
