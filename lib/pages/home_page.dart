@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instagram_josecima/providers/stories_provider.dart';
+import 'package:instagram_josecima/models/stories_model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  StoriesProvider storiesProvider = new StoriesProvider();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +82,6 @@ Widget _labels(){
   );
 }
 
-
 Widget _historias(){
   return Container(
     height: 105,
@@ -79,23 +90,14 @@ Widget _historias(){
     child: ListView(
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
-      children: <Widget>[
-        _crearHistoria(Colors.pink),
-        _crearHistoria(Colors.blue),
-        _crearHistoria(Colors.green),
-        _crearHistoria(Colors.brown),
-        _crearHistoria(Colors.yellow),
-
-
-
-        
-
-      ],
+      children: storiesProvider.getStories().map((storie){
+        return _crearHistoria(storie);
+      }).toList(),
     ),
   );
 }
 
- Widget _crearHistoria(Color color){
+ Widget _crearHistoria(Storie storie){
    return Column(
      children: <Widget>[
        Container(
@@ -109,7 +111,7 @@ Widget _historias(){
            child: ClipRRect(
              borderRadius: BorderRadius.circular(50),
              child: Image(
-               image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGa_HSPmOuXZjwVPe3iRFse3_ev61GED0hTg&usqp=CAU') ,
+               image: NetworkImage(storie.foto) ,
                height: 65,
                width: 65,
                fit: BoxFit.cover,
@@ -119,13 +121,11 @@ Widget _historias(){
          ),
        ),
        SizedBox(height: 6),
-       Text('Rosalia', style: TextStyle(fontSize: 13),),
+       Text(storie.nombre, style: TextStyle(fontSize: 13),),
        
      ],
    );
 }
-
-
 }
 
 
