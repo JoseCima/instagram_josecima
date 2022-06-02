@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instagram_josecima/providers/post_provider.dart';
 import 'package:instagram_josecima/providers/stories_provider.dart';
 import 'package:instagram_josecima/models/stories_model.dart';
 
@@ -13,6 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   StoriesProvider storiesProvider = new StoriesProvider();
+
+  PostProvider postProvider = new PostProvider();
 
 
 
@@ -138,10 +141,11 @@ Widget _historias(){
 Widget _posts(){
   return Container(
     width: MediaQuery.of(context).size.width,
-    
-    height: 400,
 
     child: ListView.builder(
+
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: 50,
       itemBuilder: (context, i){
         return _crearPost();
