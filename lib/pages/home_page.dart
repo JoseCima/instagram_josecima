@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instagram_josecima/models/post_model.dart';
 import 'package:instagram_josecima/providers/post_provider.dart';
 import 'package:instagram_josecima/providers/stories_provider.dart';
 import 'package:instagram_josecima/models/stories_model.dart';
@@ -146,15 +147,51 @@ Widget _posts(){
 
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: 50,
+      itemCount: postProvider.getPosts().length,
       itemBuilder: (context, i){
-        return _crearPost();
+
+        return _crearPost(postProvider.getPosts()[i]);
       }
     ),
   );
 }
 
-Widget _crearPost(){
+Widget _crearPost(Post post){
+
+
+List<Widget> userLikes = [];
+
+userLikes.add(Text('Me gusta por '));
+
+int count = 1;
+int countUserLikes = post.topLikes.length;
+
+post.topLikes.forEach((userName){
+   
+
+   Widget _temp = Text(
+     count != countUserLikes ? userName +", " : userName,
+     style: TextStyle(fontWeight: FontWeight.bold),
+   );
+
+
+   userLikes.add(_temp);
+   count == countUserLikes ? userLikes.add(Text(' y ')) :null;
+   count == countUserLikes ?
+   userLikes.add(Text('${post.likes} others',
+   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))): null;
+
+
+   count++;
+
+});
+
+
+
+
+
+
+
 
   return Container(
     child: Column(
@@ -174,7 +211,7 @@ Widget _crearPost(){
            child: ClipRRect(
              borderRadius: BorderRadius.circular(50),
              child: Image(
-               image: NetworkImage('https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1121.jpg') ,
+               image: NetworkImage(post.userPhoto) ,
                height: 45,
                width: 45,
                fit: BoxFit.cover,
@@ -183,7 +220,7 @@ Widget _crearPost(){
            ),
          ),
        ),
-              Text('Memo', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+              Text(post.userName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
               Expanded(child: SizedBox()),
               IconButton(onPressed: (){}, icon: Icon(Icons.more_horiz), iconSize: 30,),
               
@@ -191,7 +228,7 @@ Widget _crearPost(){
             ],
           ),
         ),
-        FadeInImage(placeholder: AssetImage('assets/img/loading.gif'), image: NetworkImage('http://placeimg.com/640/480/nightlife')),
+        FadeInImage(placeholder: AssetImage('assets/img/loading.gif'), image: NetworkImage(post.postPhoto)),
         Container(
           padding: EdgeInsets.only(top: 5, left: 7, right: 7, bottom: 1),
           child: 
@@ -215,9 +252,7 @@ Widget _crearPost(){
           padding: EdgeInsets.only(left: 17, right: 17, bottom: 10),
           color: Colors.white,
           child: Row(
-            children: <Widget>[
-              Text('Likes By Memo, Alex 118, others')
-            ],
+            children: userLikes,
           ),
         ),
         Container(
@@ -230,7 +265,7 @@ Widget _crearPost(){
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Memo',
+                      text: "${post.userName} ",
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -238,7 +273,7 @@ Widget _crearPost(){
                       )
                     ),
                     TextSpan(
-                      text: ' Occaecati volutatem accusantium et quos odit doloribus. Consequatur impedit culpa sit repellendus iure qui. Nobis sit aliquid qui ad. Id sapiente velit reprehenderit molestiae rerum iusto. Nihil est eum.',
+                      text: "${post.caption} ",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15
@@ -250,7 +285,7 @@ Widget _crearPost(){
               , Container(
                 alignment: Alignment.topLeft,
                 margin: EdgeInsets.symmetric(vertical: 10),
-                child: Text('Junio 02', style: TextStyle(color: Colors.grey, fontSize: 18)),
+                child: Text(post.date, style: TextStyle(color: Colors.grey, fontSize: 18)),
 
                 
               )
