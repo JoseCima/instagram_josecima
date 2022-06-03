@@ -18,6 +18,8 @@ class _HomePageState extends State<HomePage> {
 
   PostProvider postProvider = new PostProvider();
 
+  int currentPage = 0;
+
 
 
   @override
@@ -39,6 +41,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    
+     bottomNavigationBar: _tapBar(),
     );
   }
 
@@ -298,6 +302,54 @@ post.topLikes.forEach((userName){
   );
 }
 
+
+Widget _tapBar(){
+
+
+  return Container(
+    decoration: BoxDecoration(
+      border: Border(top: BorderSide(color: Colors.black38, width: 0.75))),
+    child: BottomNavigationBar(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      currentIndex: currentPage,
+      selectedItemColor: Colors.black,
+      iconSize: 28,
+      elevation: 0,
+      onTap: (i){
+        setState(() {
+          currentPage = i;
+        });
+      },
+      type: BottomNavigationBarType.fixed,
+      items: [
+        BottomNavigationBarItem(
+                 
+          icon: Icon(AntDesign.home),
+          label: 'Home',
+
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Feather.search),
+          label: 'Buscar'
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(AntDesign.plussquare),
+          label: 'Cargar'
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Feather.heart),
+          label: 'Likes'
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Feather.user),
+          label: 'Cuenta'
+        ),
+      ],
+  
+    ),
+  );
+}
 }
 
 
